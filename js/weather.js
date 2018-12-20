@@ -1,16 +1,87 @@
 $(function() {
 
+    /*
+    This function selects an icon for a given weather text.
+
+    Code source: https://developer.yahoo.com/weather/documentation.html#codes
+    */
+    function get_weather_icon(text) {
+
+        text = text.toLowerCase();
+
+        // This would usually be a more exaustive list, but this is just for showing
+        if (text.includes('cloudy')) {
+            return 'wi-cloudy';
+        }
+
+        if (text.includes('showers') || text.includes('rain')) {
+            return 'wi-rain';
+        }
+
+        if (text.includes('sunny')) {
+            return 'wi-sunny';
+        }
+
+        if (text.includes('snow')) {
+            return 'wi-snow';
+        }
+
+        return 'wi-tsunami';
+    }
+
     function handle_error() {
 
     }
 
     function handle_success(data) {
 
-        console.log(data.query.results.channel.item.forecast);
+        var location = data.query.results.channel.location;
+
+        // Only the forecast is interesting to us
+        data = data.query.results.channel.item.forecast;
+
+        // Outputing only 5 elements as requested
+        var count = 5;
+
+        // Clear everything for new insertion
+        $('#location-body').html('');
+
+        // Set the new location
+        $('#location-header h2').text(location.city + ', ' + location.country);
+
+        for (var i = 0 ; i < count ; i++) {
+
+            var content = $(
+                '<div class="col location-body-item">' +
+                '<div class="day"></div>' +
+                '<div class="icon"><i class="wi"></i></div>' +
+                '<div class="temp">' +
+                '<span class="low"></span><span class="high"></span>' +
+                '</div>' +
+                '</div>'
+            );
+
+            var icon_class = get_weather_icon(data[i].text);
+
+            $('.day', content).text(data[i].day);
+            $('.icon i', content).addClass(icon_class);
+            $('.temp .low', content).text(data[i].low);
+            $('.temp .high', content).text(data[i].high);
+        
+            $('#location-body').append(content);
+        }
 
         $('#form-section').hide();
         $('#render-section').show();
     }
+
+    $('#location-footer button').on('click', function(e) {
+
+        $('#location-id').val(null);
+
+        $('#form-section').show();
+        $('#render-section').hide();
+    });
 
     $('#location-form').on('submit', function(e) {
         e.preventDefault();
@@ -22,7 +93,7 @@ $(function() {
             return url + query.replace("%s", text);
         }
 
-        var location = $('#locationId').val();
+        var location = $('#location-id').val();
             
         $.get(buildRequest(location), function(data) {
 

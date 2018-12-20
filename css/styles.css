@@ -8,6 +8,25 @@ html, body {
     margin: auto;
 }
 
-#location-form {
-    
+.location-body-item {
+    text-align: center;
 }
+
+.location-body-item .icon i {
+    font-size: 40px;
+}
+
+.location-body-item .temp .high::before {
+    content: ' - ';
+}
+
+
+/*
+'<div class="col location-body-item">' +
+'<div class="day"></div>' +
+'<div class="icon"><i class="wi"></i></div>' +
+'<div class="temp">' +
+'<span class="low"></span><span class="high"></span>' +
+'</div>' +
+'</div>'
+*/
