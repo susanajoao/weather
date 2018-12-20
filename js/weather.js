@@ -31,6 +31,8 @@ $(function() {
 
     function handle_error() {
 
+        $('#location-id').addClass('is-invalid');
+        $('#location-form .feedback').text('Could not fetch the data');
     }
 
     function handle_success(data) {
@@ -77,8 +79,14 @@ $(function() {
 
     $('#location-footer button').on('click', function(e) {
 
+        // Clear errors
+        $('#location-id').removeClass('is-invalid');
+
+        // Clear text input
+        $('#location-form .feedback').text(null);
         $('#location-id').val(null);
 
+        // Toggle views
         $('#form-section').show();
         $('#render-section').hide();
     });
@@ -97,7 +105,7 @@ $(function() {
             
         $.get(buildRequest(location), function(data) {
 
-            if (data.count === 0) {
+            if (data.query.count == 0) {
                 handle_error();
             }
 

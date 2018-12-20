@@ -21,38 +21,41 @@
 
 <body>
     <section id="form-section" class="h-100">
-        <div id="location-form-container" class="container h-100">
-            <div class="row h-100 align-items-center">
+        <div class="h-100 center-wrap">
+        <div id="location-form-container" class="container">
+            <div class="row">
                 <div class="col-12">
                     <h2>Forecast weather</h2>
 
                     <form id="location-form">
                         <div class="form-group">
-                            <label for="location-id">Location</label>
+                            <label for="location-id" class="control-label">Location</label>
                             <input type="text" class="form-control" id="location-id" placeholder="Enter your location">
+                            <small class="feedback"></small>
                         </div>
                         <button type="submit" class="btn btn-dark">Submit</button>
                     </form>
                 </div>
             </div>
         </div>
+    </div>
     </section>
 
     <section id="render-section" class="h-100">
-
-        <div class="container h-100 align-items-center">
-            <div id="location-header" class="row">
-                <h2 class="col-12">Location</h2>
-            </div>
-            <div id="location-body" class="row">
-            </div>
-            <div id="location-footer" class="row">
-                <div class="col-12">
-                        <button type="button" class="btn btn-info float-right">Another Location</button>   
+        <div class="h-100 center-wrap">
+            <div class="container">
+                <div id="location-header" class="row">
+                    <h2 class="col-12">Location</h2>
+                </div>
+                <div id="location-body" class="row">
+                </div>
+                <div id="location-footer" class="row">
+                    <div class="col-12">
+                        <button type="button" class="btn btn-info float-right">Another Location</button>
+                    </div>
                 </div>
             </div>
         </div>
-
     </section>
 
     <script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
