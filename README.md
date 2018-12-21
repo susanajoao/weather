@@ -23,6 +23,3 @@ After installed, on the terminal, `cd` into the project directory and run:
 
 This will serve the contents of the folder at [http://localhost:5000](http://localhost:5000).
 
-## License
-
-This project is under an MIT license.
