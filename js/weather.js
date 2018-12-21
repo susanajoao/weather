@@ -1,5 +1,5 @@
 $(function() {
-
+    var timeout = 0;
     /*
     This function selects an icon for a given weather text.
 
@@ -19,7 +19,7 @@ $(function() {
         }
 
         if (text.includes('sunny')) {
-            return 'wi-sunny';
+            return 'wi-day-sunny';
         }
 
         if (text.includes('snow')) {
@@ -77,23 +77,8 @@ $(function() {
         $('#render-section').show();
     }
 
-    $('#location-footer button').on('click', function(e) {
-
-        // Clear errors
-        $('#location-id').removeClass('is-invalid');
-
-        // Clear text input
-        $('#location-form .feedback').text(null);
-        $('#location-id').val(null);
-
-        // Toggle views
-        $('#form-section').show();
-        $('#render-section').hide();
-    });
-
-    $('#location-form').on('submit', function(e) {
-        e.preventDefault();
-
+    function get_weather() {
+        
         var query = "select * from weather.forecast where woeid in (select woeid from geo.places(1) where text=\"%s\")";
         var url = "https://query.yahooapis.com/v1/public/yql?format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys&q=";
        
@@ -111,9 +96,31 @@ $(function() {
 
             else {
                 handle_success(data);
+                timeout = setTimeout(get_weather, 10000);
             }
         })
         .fail(handle_error);
+    }
+
+    $('#location-footer button').on('click', function(e) {
+        //stop refresh weather
+        clearTimeout(timeout);
+
+        // Clear errors
+        $('#location-id').removeClass('is-invalid');
+
+        // Clear text input
+        $('#location-form .feedback').text(null);
+        $('#location-id').val(null);
+
+        // Toggle views
+        $('#form-section').show();
+        $('#render-section').hide();
+    });
+
+    $('#location-form').on('submit', function(e) {
+        e.preventDefault();
+        get_weather(e);
     });
 
     // Initially hide the render section
